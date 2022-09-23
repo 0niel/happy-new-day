@@ -38,7 +38,7 @@ while i < 2485:
     }
 
     specs = []
-    for j in range(5):
+    for _ in range(5):
         if i < 2485:
             tmp = {
                 "features": [

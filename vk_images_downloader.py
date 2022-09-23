@@ -4,11 +4,9 @@ import requests
 access_token = "<YOUR_USER_TOKEN>"  # https://vkhost.github.io/
 api_url = "https://api.vk.com/method/wall.get"
 
-offset = 0
-
 i = 0
 request_num = 0
-while offset < 2468:
+for offset in range(0, 2468, 20):
     data = {
         "owner_id": -138742149,
         "offset": offset,
@@ -19,13 +17,12 @@ while offset < 2468:
         time.sleep(1)
     items = requests.post(api_url, data=data).json()["response"]["items"]
     request_num += 1
-    offset += 20
     for item in items:
         if "attachments" in item:
             for attachment in item["attachments"]:
                 if attachment["type"] == "photo":
                     photo_url = attachment["photo"]["sizes"][-1]["url"]
-                    fullname = str(i) + ".jpg"
+                    fullname = f"{str(i)}.jpg"
                     img_data = requests.get(photo_url).content
                     request_num += 1
                     with open(f"images//{fullname}", "wb") as handler:
